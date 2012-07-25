@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  GRIDGAIN - CLOUD DEVELOPMENT PLATFORM, "ENTERPRISE EDITION"
+  COPYRIGHT (C) 2005-2010 GRIDGAIN TECHNOLOGIES. ALL RIGHTS RESERVED.
+
+  ANY AND ALL FORMS OF USE, DISTRIBUTION, AND MODIFICATION OF THIS
+  SOURCE CODE AND/OR RESULTING OBJECT CODE IS STRICTLY PROHIBITED
+  WITHOUT EXPLICIT WRITTEN PERMISSION FROM GRIDGAIN TECHNOLOGIES.
+
+  THIS SOFTWARE IS PROVIDED "AS IS," WITHOUT A WARRANTY OF ANY KIND. ALL
+  EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS AND WARRANTIES, INCLUDING ANY
+  IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR
+  NON-INFRINGEMENT, ARE HEREBY EXCLUDED. GRIDGAIN TECHNOLOGIES AND ITS LICENSORS
+  SHALL NOT BE LIABLE FOR ANY DAMAGES SUFFERED BY LICENSEE AS A RESULT OF USING,
+  MODIFYING OR DISTRIBUTING THE SOFTWARE OR ITS DERIVATIVES. IN NO EVENT WILL
+  GRIDGAIN TECHNOLOGIES OR ITS LICENSORS BE LIABLE FOR ANY LOST REVENUE, PROFIT
+  OR DATA, OR FOR DIRECT, INDIRECT, SPECIAL, CONSEQUENTIAL, INCIDENTAL OR PUNITIVE
+  DAMAGES, HOWEVER CAUSED AND REGARDLESS OF THE THEORY OF LIABILITY, ARISING OUT
+  OF THE USE OF OR INABILITY TO USE SOFTWARE, EVEN IF GRIDGAIN TECHNOLOGIES HAS
+  BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+  THIS SOFTWARE IS NOT DESIGNED OR INTENDED FOR USE IN ON-LINE CONTROL OF
+  AIRCRAFT, AIR TRAFFIC, AIRCRAFT NAVIGATION OR AIRCRAFT COMMUNICATIONS; OR IN
+  THE DESIGN, CONSTRUCTION, OPERATION OR MAINTENANCE OF ANY NUCLEAR
+  FACILITY. LICENSEE REPRESENTS AND WARRANTS THAT IT WILL NOT USE OR
+  REDISTRIBUTE THE SOFTWARE FOR SUCH PURPOSES.
+-->
+
+<!--
+    GridGain Spring configuration file to startup grid for GridStoreExample.
+
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+    <description>Main Spring file for grid configuration.</description>
+
+
+    <!--
+        Configuration below demonstrates how to setup a collision and failover SPI's
+        to enable work stealing from overloaded nodes to underloaded nodes.
+
+        Note that for job stealing to work, you must always use both,
+        GridJobStealingCollisionSpi and GridJobStealingFailoverSPI.
+    -->
+    <bean id="grid.cfg" class="org.gridgain.grid.GridConfigurationAdapter" scope="singleton">
+        <!-- Set to local host address just for examples. -->
+        <property name="localHost" value="127.0.0.1"/>
+
+        <property name="deploymentMode" value="SHARED"/>
+
+        <property name="cacheConfiguration">
+            <!--
+                Specify list of cache configurations here. Any property from
+                GridCacheConfiguration interface can be configured here.
+                Note that absolutely all configuration properties are optional.
+            -->
+            <bean class="org.gridgain.grid.cache.GridCacheConfigurationAdapter">
+                <!--<property name="name" value="mycache"/>-->
+                <!--<property name="cacheMode" value="LOCAL"/>-->
+                <!--<property name="cacheMode" value="REPLICATED"/>-->
+                <property name="cacheMode" value="PARTITIONED"/>
+
+                <!-- Initial cache size. -->
+                <property name="startSize" value="10"/>
+
+                <!--
+                    Setting this to true will cause local node to wait for remote commits.
+                    However, it's important to set it to true in the examples as we assert on
+                    conditions that usually assume full completion of transactions on all nodes.
+                -->
+                <property name="synchronousCommit" value="true"/>
+
+                <!--
+                    Optional eviction policy (GridCacheLirsEvictionPolicy is used by default).
+                -->
+                <property name="evictionPolicy">
+                    <bean class="org.gridgain.grid.cache.eviction.lru.GridCacheLruEvictionPolicy">
+                        <property name="maxSize" value="100"/>
+                    </bean>
+                </property>
+
+                <property name="store">
+                    <bean class="org.gridgain.examples.cache.store.jdbc.GridCacheJdbcPersonStore" scope="singleton"/>
+                </property>
+            </bean>
+        </property>
+
+        <!--
+            Uncomment this to provide TCP discovery SPI (Amazon EC2).
+        -->
+        <!--
+        <property name="discoverySpi">
+            <bean class="org.gridgain.grid.spi.discovery.tcp.GridTcpDiscoverySpi">
+                <property name="ipFinder">
+                    <bean class="org.gridgain.grid.spi.discovery.tcp.ipfinder.s3.GridTcpDiscoveryS3IpFinder">
+                        <property name="accessKeyId" value="<YOUR EC2 ACCESS KEY>"/>
+                        <property name="secretAccessKey" value="<YOUR EC2 SECRET KEY>"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment this to provide TCP discovery SPI (Local network).
+
+            If path to shared file system is not explicitly provided,
+            then only local nodes will be able to discover each other.
+        -->
+        <!--
+        <property name="discoverySpi">
+            <bean class="org.gridgain.grid.spi.discovery.tcp.GridTcpDiscoverySpi">
+                <property name="ipFinder">
+                    <bean class="org.gridgain.grid.spi.discovery.tcp.ipfinder.sharedfs.GridTcpDiscoverySharedFsIpFinder">
+                        <property name="path" value="work/disco/tcp"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment this to provide TCP discovery SPI (predefined addresses).
+            Use the addresses list to provide IP addresses of initial nodes in the grid
+            (at least one address must be provided).
+        -->
+        <property name="discoverySpi">
+            <bean class="org.gridgain.grid.spi.discovery.tcp.GridTcpDiscoverySpi">
+                <property name="ipFinder">
+                    <bean class="org.gridgain.grid.spi.discovery.tcp.ipfinder.vm.GridTcpDiscoveryVmIpFinder">
+                        <property name="addresses">
+                            <list>
+                                <!--
+                                    List all IP/port configurations that potentially
+                                    can be started first in examples. We are assuming
+                                    grid of size 10 or less.
+                                -->
+                                <value>127.0.0.1:47500</value>
+                                <value>127.0.0.1:47501</value>
+                                <value>127.0.0.1:47502</value>
+                                <value>127.0.0.1:47503</value>
+                                <value>127.0.0.1:47504</value>
+                                <value>127.0.0.1:47505</value>
+                                <value>127.0.0.1:47506</value>
+                                <value>127.0.0.1:47507</value>
+                                <value>127.0.0.1:47508</value>
+                                <value>127.0.0.1:47509</value>
+                            </list>
+                        </property>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+</beans>

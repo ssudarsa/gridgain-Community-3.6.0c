@@ -1,0 +1,299 @@
+/*
+ * Copyright (C) GridGain Systems Licensed under GPLv3, http://www.gnu.org/licenses/gpl.html
+ *  _________        _____ __________________        _____
+ *  __  ____/___________(_)______  /__  ____/______ ____(_)_______
+ *  _  / __  __  ___/__  / _  __  / _  / __  _  __ `/__  / __  __ \
+ *  / /_/ /  _  /    _  /  / /_/ /  / /_/ /  / /_/ / _  /  _  / / /
+ *  \____/   /_/     /_/   \_,__/   \____/   \__,_/  /_/   /_/ /_/
+ *
+ * Version: 3.6.0c.13012012
+ */
+
+/*
+ * Main style for the default text.
+ */
+body, pre, dd, dl, dt, td, table, th, tr, li, ol, ul, p, br, a, input, form, textarea, select {
+    font: 13px/normal helvetica, verdana, arial, sans-serif;
+    color: #36393D;
+    text-decoration: none;
+}
+
+div.warning {
+    overflow: auto;
+    background-color: #fefdd6;
+    padding-left: 3px;
+    padding-right: 3px;
+    border: 1px dotted #cc9900;
+}
+
+/* Cancel out default italic for <em>. */
+em {
+    font-style: normal;
+}
+
+/* Fix for direct font manipulation in Javadoc. */
+th font b {
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+
+h1.header {
+    font: 16px/normal helvetica, verdana, arial, sans-serif;
+    color: #111;
+    font-weight: bold;
+    margin: 10px 0 0 0;
+}
+
+h2.header {
+    font: 15px/normal helvetica, verdana, arial, sans-serif;
+    color: #333;
+    margin: 10px 0 0 0;
+    font-weight: bold;
+}
+
+span#callout_yellow {
+    border: 1px #F0C000 solid;
+    background: #FFFFCE;
+    padding: 1px 4px 1px 4px;
+    color: #333;
+    font-size: 11px;
+}
+
+span#callout_blue {
+    border: 1px #3c78b5 solid;
+    background: #d8e4f1;
+    padding: 1px 4px 1px 4px;
+    color: #333;
+    font-size: 11px;
+}
+
+img#callout_img {
+    position: relative;
+    top: 1px;
+    right: -1px;
+}
+
+input.search_button {
+    color: #333;
+    font-size: 10px;
+    background-color: #efefef;
+    font-family: helvetica, verdana, arial, helvetica, sans-serif;
+    border: 1px #ddd solid;
+}
+
+input.search_text {
+    color: #333;
+    font-size: 11px;
+    font-family: helvetica, verdana, arial, helvetica, sans-serif;
+    border: 1px #ddd solid;
+    height: auto;
+}
+
+div#authors {
+    border: 1px dotted #ddd;
+    padding: 15px 15px 0 15px;
+    margin: 5px;
+    width: 380px;
+    display: block;
+    background-color: #fff;
+    visibility: visible;
+}
+
+table.doctable {
+    margin: 10px 0 10px 0;
+    padding: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+    border: 1px dotted #ccc;
+}
+
+table.doctable th {
+    font-weight: bold;
+    border: 1px dotted #ccc;
+    background: #D6EBAD;
+    padding: 5px;
+}
+
+table.doctable tr:hover {
+    background: #f6f6f6;
+}
+
+table.doctable td {
+    border: 1px dotted #ddd;
+    padding: 5px;
+}
+
+.author {
+    margin: 0 0 0 20px;
+}
+
+.close-link {
+    border: 1px solid #ddd;
+    background-color: #efefef;
+    padding: 3px;
+    color: #333;
+    font-size: 9px;
+}
+.close-link:hover {
+    text-decoration: none;
+    background-color: #efefef;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+    padding: 3px;
+    font-size: 9px;
+}
+
+ul {
+    list-style-type: circle;
+}
+
+li {
+    padding-top: 5px;
+}
+
+tt, code {
+    font: 12px/normal Courier New;
+}
+
+blockquote.snippet, pre.snippet {
+    background: #f0f7ff;
+    border: 1px dotted #aaa;
+    padding: 10px;
+    font-family: courier new, serif;
+    margin: 10px 0 10px 0;
+}
+
+hr {
+    border-style: dotted;
+    width: 100%;
+    color: #ddd;
+}
+
+.dotted {
+    border: 1px #ddd dotted;
+}
+
+.TableRowColor {
+    color: #333;
+}
+
+.TableRowColor:hover {
+    color: #333;
+    background: #f6f6f6;
+}
+
+.img-link {
+    text-decoration: none;
+}
+
+.img-link:hover {
+    text-decoration: none;
+    border-bottom: 0;
+}
+
+/*
+ * By default links have underline decoration.
+ */
+a {
+    text-decoration: none;
+    color: #369;
+}
+
+/*
+ * Note, it works only on IE. On NS links don't have any effects.
+ */
+a:hover {
+    color: #f00;
+    border-bottom: 1px dotted;
+}
+
+.header {
+    font: 16px/normal helvetica, verdana, arial, helvetica, sans-serif;
+    color: #333;
+}
+
+.javadocimg {
+    border:0;
+    padding: 0 0 0 5px;
+}
+
+.pkgbox {
+}
+
+/*
+ * Table colors.
+ */
+.TableHeadingColor { background: #D6EBAD }
+.TableSubHeadingColor { background: #FFFFFF }
+
+/*
+ * Navigation bar fonts and colors.
+ */
+.NavBarCell2 a {
+    background-color: #fff;
+    color: #356AA0;
+    font-weight: 100;
+}
+
+.NavBarCell1 {
+    background-color: #fff;
+    color: #797979;
+}
+
+.NavBarCell1 a {
+    background-color: #fff;
+    font-weight: 100;
+}
+.NavBarCell1Rev {
+    background-color: #D6EBAD;
+    border: 1px dotted #9AC65C;
+}
+.NavBarFont1 { color: #333 }
+
+/*
+ * CSS for @Nullable.
+ */
+.nullable {
+    color: #d4a61f;
+    font-variant: small-caps;
+    background-color: #ffffff;
+}
+
+/*
+ * CSS for @Deprecated.
+ */
+.deprecated {
+    color: #e05249;
+    font-weight: bold;
+    font-variant: small-caps;
+}
+
+/*
+ * CSS for TODOs.
+ */
+.todo {
+    color: #e05249;
+    font-weight: bold;
+    font-variant: small-caps;
+    font-size: 10px;
+}
+
+/*
+ * CSS for '<' and '>'.
+ */
+.angle_bracket {
+    color: #aaa;
+}
+
+span.table-header {
+    font: 20px/normal helvetica, verdana, arial, helvetica, sans-serif;
+    padding-left: 5px;
+    color: #333;
+}
+
+span.table-subheader {
+    font: 13px/normal helvetica, verdana, arial, helvetica, sans-serif;
+    padding-left: 5px;
+    color: #333;
+}

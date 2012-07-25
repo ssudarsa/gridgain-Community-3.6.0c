@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+    _________        _____ __________________        _____
+    __  ____/___________(_)______  /__  ____/______ ____(_)_______
+    _  / __  __  ___/__  / _  __  / _  / __  _  __ `/__  / __  __ \
+    / /_/ /  _  /    _  /  / /_/ /  / /_/ /  / /_/ / _  /  _  / / /
+    \____/   /_/     /_/   \_,__/   \____/   \__,_/  /_/   /_/ /_/
+
+    Copyright (C) GridGain Systems Licensed under GPLv3, http://www.gnu.org/licenses/gpl.html
+    Version: 3.6.0c.13012012
+-->
+
+<project default="build.gar" name="GridGain GAR Example">
+    <description>
+        GridGain GAR build script.
+    </description>
+
+    <fail unless="GG_HOME" message="Missing Ant property GG_HOME."/>
+
+    <property name="base.dir" value="${GG_HOME}"/>
+    <property name="examples.gar.dir" value="${base.dir}/examples/gar"/>
+    <property name="examples.gar.src.dir" value="${examples.gar.dir}/src"/>
+    <property name="examples.gar.deploy.dir" value="${examples.gar.dir}/deploy"/>
+    <property name="libs.dir" value="${base.dir}/libs"/>
+    <property name="gar.name" value="helloworld.gar"/>
+
+    <!--
+        Libraries.
+    -->
+    <path id="gg.libs.path">
+        <fileset id="gg.libs" dir="${libs.dir}">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${base.dir}">
+            <include name="gridgain*.jar"/>
+        </fileset>
+    </path>
+
+    <!--
+        Builds GAR file.
+    -->
+    <target name="build.gar">
+        <!-- Trace. -->
+        <echo message=""/>
+        <echo message="== Building GAR =="/>
+
+        <!-- Cleanup the destination temp binary directory. -->
+        <delete dir="${examples.gar.deploy.dir}/classes"/>
+        <mkdir dir="${examples.gar.deploy.dir}/classes"/>
+
+        <!-- Compile the examples code. -->
+        <javac
+            target="1.6"
+            source="1.6"
+            compiler="javac1.6"
+            memoryInitialSize="4096m"
+            memoryMaximumSize="4096m"
+            srcdir="${examples.gar.src.dir}"
+            destdir="${examples.gar.deploy.dir}/classes" debug="true"
+            nowarn="off">
+            <classpath>
+                <path refid="gg.libs.path"/>
+            </classpath>
+            <include name="org/gridgain/examples/gar/*.java"/>
+        </javac>
+
+        <!-- Create the destination temp binary gar directory where files placed according GAR hierarchy. -->
+        <delete dir="${examples.gar.deploy.dir}/tmpgar"/>
+        <mkdir dir="${examples.gar.deploy.dir}/tmpgar"/>
+
+        <!-- Copy task classes and used resources. -->
+        <copy todir="${examples.gar.deploy.dir}/tmpgar">
+            <fileset dir="${examples.gar.deploy.dir}/classes">
+                <include name="org/gridgain/examples/**/*.class"/>
+                <exclude name="org/gridgain/examples/gar/GridGarHelloWorldBean.class"/>
+            </fileset>
+            <fileset dir="${examples.gar.src.dir}">
+                <include name="org/gridgain/examples/gar/gar-spring-bean.xml"/>
+            </fileset>
+        </copy>
+
+        <mkdir dir="${examples.gar.deploy.dir}/tmpgar/META-INF"/>
+
+        <!--
+            Create JAR library imported from GridGarHelloWorldTask.
+            Imported JAR used to show where imported dependencies may be placed in GAR file.
+        -->
+        <mkdir dir="${examples.gar.deploy.dir}/tmpgar/lib/dependlib"/>
+
+        <!-- Prepare structure for creation imported jar file. -->
+        <copy todir="${examples.gar.deploy.dir}/tmpgar/lib/dependlib">
+            <fileset dir="${examples.gar.deploy.dir}/classes">
+                <include name="org/gridgain/examples/gar/GridGarHelloWorldBean.class"/>
+            </fileset>
+            <fileset dir="${examples.gar.src.dir}">
+                <include name="org/gridgain/examples/gar/gar-example.properties"/>
+            </fileset>
+        </copy>
+
+        <!-- Create imported jar file. -->
+        <jar destfile="${examples.gar.deploy.dir}/tmpgar/lib/depend.jar"
+            basedir="${examples.gar.deploy.dir}/tmpgar/lib/dependlib">
+        </jar>
+
+        <delete dir="${examples.gar.deploy.dir}/tmpgar/lib/dependlib"/>
+
+        <!--
+            Special task for creating GAR files.
+        -->
+        <taskdef name="gar" classname="org.gridgain.grid.tools.ant.gar.GridGarAntTask"
+            classpathref="gg.libs.path"/>
+
+        <!-- Create GAR file. -->
+        <gar destfile="${examples.gar.deploy.dir}/${gar.name}"
+            descrdir="${examples.gar.dir}/META-INF"
+            basedir="${examples.gar.deploy.dir}/tmpgar"/>
+
+        <!-- Cleanup temporary binary directories. -->
+        <delete dir="${examples.gar.deploy.dir}/tmpgar"/>
+        <delete dir="${examples.gar.deploy.dir}/classes"/>
+    </target>
+</project>

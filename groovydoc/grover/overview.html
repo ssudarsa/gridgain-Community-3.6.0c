@@ -1,0 +1,75 @@
+&nbsp;
+
+<div align="center">
+    <font size="+2">GridGain Grover</font>
+    <br>
+    <font size="-1">Groovy++ DSL</font>
+</div>
+<p>
+<h2 class="header">Overview</h2>
+<code>Grover</code> is the main object that encapsulates Grover DSL. It includes global functions
+on <code>"grover"</code> keyword and helper converters. <code>grover</code> also
+mimics many methods in <code>GridFactory</code> class from Java side.
+<p>
+The idea behind Scalar DSL - <i>zero additional logic and only conversions</i> implemented
+using Groovy++ type inference. Note that most of the Grover DSL development happened on Java
+side of GridGain 3.0 product line - Java APIs had to be adjusted quite significantly to
+support natural adaptation of functional APIs. That basically means that all functional
+logic must be available on Java side and Grover only provides conversions from Grover
+language constructs to Java constructs. Note that currently GridGain supports Groovy 1.8
+and up only.
+<p>
+This design approach ensures that Java side does not starve and usage paradigm
+is mostly the same between Java and Groovy++ - yet with full power of Groovy++ behind.
+In other words, Grover only adds Groovy++ specifics, but not greatly altering semantics
+of how GridGain APIs work. Most of the time the code in Grover can be written in
+Java in almost the same number of lines.
+
+<h2 class="header">Suffix '$' In Names</h2>
+Symbol `$` is used in names when they conflict with the names in the base Java class
+that Grover is shadowing or with Java package name that your Groovy++ code is importing.
+Instead of giving two different names to the same function we've decided to simply mark
+Groovy++'s side method with `$` suffix.
+
+<h2 class="header">Importing</h2>
+Grover needs to be imported in a proper way so that necessary objects got available in the scope:
+<pre name="code" class="groovy">
+import static org.gridgain.grover.Grover.*
+import org.gridgain.grover.categories.*
+import org.gridgain.grover.lang.*
+</pre>
+Any class that uses Grover should also be annotated like so:
+<pre name="code" class="groovy">
+&#64;Typed
+&#64;Use(GroverCacheProjectionCategory)
+class MyClass {
+    ...
+}
+</pre>
+
+<h2 class="header">Examples</h2>
+Here are few short examples of how Scalar can be used to program routine distributed
+task. All examples below use default GridGain configuration and default grid. All these
+examples take an implicit advantage of auto-discovery and failover, load balancing and
+collision resolution, zero deployment and many other underlying technologies in the
+GridGain - while remaining absolutely distilled to the core domain logic.
+
+This code snippet prints out full topology:
+<pre name="code" class="groovy">
+grover { -> grid$.each { n -> println("Node: " + n.id8()) } }
+</pre>
+The obligatory example - cloud enabled <code>Hello World!</code>. It splits the phrase
+into multiple words and prints each word on a separate grid node:
+<pre name="code" class="groovy">
+grover { -> grid$.run(SPREAD, "Hello World!".split(" ").collect { w -> { -> println(w) } } ) }
+</pre>
+This example broadcasts message to all nodes:
+<pre name="code" class="groovy">
+grover { -> grid$.run(BROADCAST) { println("Broadcasting!!!") } }
+</pre>
+
+
+
+
+
+

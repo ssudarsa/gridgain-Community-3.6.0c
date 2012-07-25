@@ -1,0 +1,17 @@
+THANK YOU FOR DOWNLOADING GRIDGAIN!
+
+Although we have seen tens and tens of thousands of downloads to date we are still grateful for each and every new download we receive. We put a lot of effort and energy into our software - and we are thankful for your time and effort to try it out. Here's how you get started.
+
+1. Examples
+The best way to get started with GridGain is to look through examples. You can find all examples under 'examples' folder right at where you installed GridGain. This folder contains examples for Java, Scala and some for Groovy. 
+
+You can simply run these examples from your favorite IDE or just command line. All examples have documentation on what they do and some basic configuration tips, if any needed.
+
+We suggest to start with HelloWorld examples located at 'examples/java/org/gridgain/examples/helloworld' folder. Getting started is easier with documentation on our Wiki: http://bit.ly/bywKFk 
+
+2. Javadoc & Scaladoc
+We spend significant amount of time on writing and maintaining Javadoc and Scaladoc for our product. All documentation is shipped with it and you can find it under 'javadoc' and 'scaladoc' sub-folder respectively. 
+
+3. Scripts
+All scripts that you need to use on a regular basis can be found at 'bin' sub-folder. To start a grid node with default configuration simply run 'bin/ggstart.sh' or 'bin\ggstart.bat' script - and you are in the grid!
+

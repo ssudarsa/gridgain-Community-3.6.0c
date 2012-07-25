@@ -1,0 +1,260 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+        <head>
+          <title>org.gridgain.scalar.pimps</title>
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link type="text/css" media="screen" rel="stylesheet" href="../../../../lib/template.css" />
+      <script type="text/javascript" src="../../../../lib/jquery.js"></script>
+      <script type="text/javascript" src="../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../lib/tools.tooltip.js"></script>
+    
+        <link type='text/css' rel='stylesheet' href='http://www.gridgain.com/sh3.0/styles/shCore.css'/>
+<link type='text/css' rel='stylesheet' href='http://www.gridgain.com/sh3.0/styles/shThemeEclipse.css'/>
+<script type='text/javascript' src='http://www.gridgain.com/sh3.0/src/shCore.js'></script>
+<script type='text/javascript' src='http://www.gridgain.com/sh3.0/src/shLegacy.js'></script>
+<script type='text/javascript' src='http://www.gridgain.com/sh3.0/scripts/shBrushJava.js'></script>
+<script type='text/javascript' src='http://www.gridgain.com/sh3.0/scripts/shBrushPlain.js'></script>
+<script type='text/javascript' src='http://www.gridgain.com/sh3.0/scripts/shBrushJScript.js'></script>
+<script type='text/javascript' src='http://www.gridgain.com/sh3.0/scripts/shBrushXml.js'></script>
+<script type='text/javascript' src='http://www.gridgain.com/sh3.0/scripts/shBrushScala.js'></script>
+<script type='text/javascript' src='http://www.gridgain.com/sh3.0/scripts/shBrushGroovy.js'></script>
+</head>
+
+        <body class="value">
+      <div id="definition">
+        <img src="../../../../lib/package_big.png" />
+        <p id="owner"><a name="org" class="extype" href="../../../package.html">org</a>.<a name="org.gridgain" class="extype" href="../../package.html">gridgain</a>.<a name="org.gridgain.scalar" class="extype" href="../package.html">scalar</a></p>
+        <h1>pimps</h1>
+      </div>
+
+      <h4 class="signature" id="signature">
+      <span class="kind">package</span>
+      <span class="symbol"> 
+        <span class="name">pimps</span>
+        
+        
+      </span>
+      </h4>
+      
+          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>Contains Scala &quot;Pimp&quot; implementations for main GridGain entities.
+</p></div><dl class="attributes block"> <dt>Version</dt><dd><p>GridGain 3.6 build: 13012012
+</p></dd></dl></div>
+        
+
+      <div id="template">
+
+        <div id="mbrsel">
+          <div id="textfilter"><span class="pre"></span><span class="input"><input accesskey="/" type="text" /></span><span class="post"></span></div>
+          
+          
+          <div id="visbl">
+              <span class="filtertype">Visibility</span>
+              <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+            </div>
+        </div>
+
+        
+
+        <div class="types members" id="types">
+              <h3>Type Members</h3>
+              <ol><li visbl="pub" name="org.gridgain.scalar.pimps.ScalarCachePimp" data-isabs="false">
+      <a id="ScalarCachePimp:ScalarCachePimp[K, V]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="ScalarCachePimp.html"><span class="name">ScalarCachePimp</span></a>
+        <span class="tparams">[<span name="K">K</span>, <span name="V">V</span>]</span>
+        <span class="result"> extends ScalarCacheProjectionPimp[K, V] with Ordered[GridCache[K, V]]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Defines Scalar &quot;pimp&quot; for <code>GridCache</code> on Java side.</p>
+    </li><li visbl="pub" name="org.gridgain.scalar.pimps.ScalarCacheProjectionPimp" data-isabs="false">
+      <a id="ScalarCacheProjectionPimp:ScalarCacheProjectionPimp[K, V]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="ScalarCacheProjectionPimp.html"><span class="name">ScalarCacheProjectionPimp</span></a>
+        <span class="tparams">[<span name="K">K</span>, <span name="V">V</span>]</span>
+        <span class="result"> extends PimpedType[GridCacheProjection[K, V]] with Iterable[GridCacheEntry[K, V]]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Defines Scalar &quot;pimp&quot; for <code>GridCacheProjection</code> on Java side.</p>
+    </li><li visbl="pub" name="org.gridgain.scalar.pimps.ScalarGridPimp" data-isabs="false">
+      <a id="ScalarGridPimp:ScalarGridPimp"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="ScalarGridPimp.html"><span class="name">ScalarGridPimp</span></a>
+        
+        <span class="result"> extends ScalarProjectionPimp[Grid] with ScalarTaskThreadContext[Grid]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Defines Scalar &quot;pimp&quot; for <code>Grid</code> on Java side.</p>
+    </li><li visbl="pub" name="org.gridgain.scalar.pimps.ScalarProjectionPimp" data-isabs="false">
+      <a id="ScalarProjectionPimp:ScalarProjectionPimp[A]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="ScalarProjectionPimp.html"><span class="name">ScalarProjectionPimp</span></a>
+        <span class="tparams">[<span name="A">A <span class='angle_bracket'>&lt;</span>: GridProjection</span>]</span>
+        <span class="result"> extends PimpedType[A] with Iterable[GridRichNode] with ScalarTaskThreadContext[A]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Defines Scalar &quot;pimp&quot; for <code>GridProjection</code> on Java side.</p>
+    </li><li visbl="pub" name="org.gridgain.scalar.pimps.ScalarRichNodePimp" data-isabs="false">
+      <a id="ScalarRichNodePimp:ScalarRichNodePimp"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="ScalarRichNodePimp.html"><span class="name">ScalarRichNodePimp</span></a>
+        
+        <span class="result"> extends ScalarProjectionPimp[GridRichNode] with Ordered[GridRichNode] with ScalarTaskThreadContext[GridRichNode]</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Defines Scalar &quot;pimp&quot; for <code>GridRichNode</code> on Java side.</p>
+    </li><li visbl="pub" name="org.gridgain.scalar.pimps.ScalarTaskThreadContext" data-isabs="true">
+      <a id="ScalarTaskThreadContext:ScalarTaskThreadContext[T]"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="ScalarTaskThreadContext.html"><span class="name">ScalarTaskThreadContext</span></a>
+        <span class="tparams">[<span name="T">T <span class='angle_bracket'>&lt;</span>: GridProjection</span>]</span>
+        <span class="result"> extends ScalarConversions</span>
+      </span>
+      </h4>
+      <p class="comment cmt">This trait provide mixin for properly typed version of <code>GridProjection#with...()</code> methods.</p>
+    </li></ol>
+            </div>
+        
+        
+
+        <div class="values members" id="values">
+              <h3>Value Members</h3>
+              <ol><li visbl="pub" name="org.gridgain.scalar.pimps.ScalarCachePimp" data-isabs="false">
+      <a id="ScalarCachePimp:ScalarCachePimp"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="ScalarCachePimp$.html"><span class="name">ScalarCachePimp</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Companion object.</p>
+    </li><li visbl="pub" name="org.gridgain.scalar.pimps.ScalarCacheProjectionPimp" data-isabs="false">
+      <a id="ScalarCacheProjectionPimp:ScalarCacheProjectionPimp"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="ScalarCacheProjectionPimp$.html"><span class="name">ScalarCacheProjectionPimp</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Companion object.</p>
+    </li><li visbl="pub" name="org.gridgain.scalar.pimps.ScalarGridPimp" data-isabs="false">
+      <a id="ScalarGridPimp:ScalarGridPimp"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="ScalarGridPimp$.html"><span class="name">ScalarGridPimp</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Companion object.</p>
+    </li><li visbl="pub" name="org.gridgain.scalar.pimps.ScalarProjectionPimp" data-isabs="false">
+      <a id="ScalarProjectionPimp:ScalarProjectionPimp"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="ScalarProjectionPimp$.html"><span class="name">ScalarProjectionPimp</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Companion object.</p>
+    </li><li visbl="pub" name="org.gridgain.scalar.pimps.ScalarRichNodePimp" data-isabs="false">
+      <a id="ScalarRichNodePimp:ScalarRichNodePimp"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="ScalarRichNodePimp$.html"><span class="name">ScalarRichNodePimp</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Companion object.</p>
+    </li></ol>
+            </div>
+
+        
+
+        
+
+      </div>
+      
+      <div id="tooltip"></div>
+      
+    
+                
+                    <table style="padding: 30px 10px 10px 10px; width: 100%">
+                    <tr>
+                        <td align="left" valign="center">
+                            <nobr>GridGain - Real Time Big Data</nobr>
+                            <br>
+                            <b>Version:</b> 3.6 build: 13012012
+                            <br>
+                            <a target=_blank href="http://www.gridgain.com"><nobr>2012 Copyright &#169; GridGain Systems</nobr></a>
+                        </td>
+                        <td width="45%">&nbsp;</td>
+                        <td align="center" valign="center">
+                            <table border="0">
+                            <tr>
+                                <td>
+                                    <nobr>Follow us:&nbsp;&nbsp;</nobr>
+                                </td>
+                                <td style="padding-right: 5px">
+                                    <a target=github class='img_link' href='https://github.com/gridgain/gridgain'>
+                                        <img border=0 align=absmiddle src='http://www.gridgain.com/images/github_cat_31x28.gif' alt='Follow GridGain on Github'>
+                                    </a>
+                                </td>
+                                <td style="padding-right: 5px">
+                                    <a target=facebook class='img_link' href='http://www.facebook.com/profile.php?id=6458239494'>
+                                        <img border=0 align=absmiddle src='http://www.gridgain.com/images/facebook_small.png' alt='Follow GridGain on Facebook'>
+                                    </a>
+                                </td>
+                                <td style="padding-right: 5px">
+                                    <a class='img_link' target=meetup href='http://www.meetup.com/GridGain-Bay-Area-Meetup-Group'>
+                                        <img border=0 align=absmiddle src='http://www.gridgain.com/images/meetup_logo_small.png' alt='Join GridGain User Group'/>
+                                    </a>
+                                </td>
+                                <td style="padding-right: 5px">
+                                    <a class='img_link' target=twitter href='http://www.twitter.com/gridgain'>
+                                        <img border=0 align=absmiddle src='http://www.gridgain.com/images/twitter.gif' alt='Follow GridGain on Twitter'/>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class='img_link' target=youtube href='http://www.youtube.com/user/gridgain'>
+                                        <img border=0 align=absmiddle src='http://www.gridgain.com/images/youtube_small.png' alt='Follow GridGain on YouTube'/>
+                                    </a>
+                                </td>
+                            </tr>
+                            </table>
+                        </td>
+                        <td width="50%">&nbsp;</td>
+                        <td align="right" valign="center">
+                            <a class="img-link" target=_blank href="http://www.gridgain.com">
+                                <img border="0" src="http://www.gridgain.com/images/logo2_bw_no_ver.gif">
+                            </a>
+                        </td>
+                    </tr>
+                    </table>
+                
+            <script type='text/javascript'>SyntaxHighlighter.all();dp.SyntaxHighlighter.HighlightAll('code');</script>
+</body>
+
+      </html>

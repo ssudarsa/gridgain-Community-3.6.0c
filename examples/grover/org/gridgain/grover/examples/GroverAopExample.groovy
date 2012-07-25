@@ -1,0 +1,119 @@
+// Copyright (C) GridGain Systems Licensed under GPLv3, http://www.gnu.org/licenses/gpl.html
+
+/*
+ * _________
+ * __  ____/______________ ___   _______ ________
+ * _  / __  __  ___/_  __ \__ | / /_  _ \__  ___/
+ * / /_/ /  _  /    / /_/ /__ |/ / /  __/_  /
+ * \____/   /_/     \____/ _____/  \___/ /_/
+ *
+ */
+
+package org.gridgain.grover.examples
+
+import org.gridgain.grid.gridify.*
+import static org.gridgain.grover.Grover.*
+
+/**
+ * Demonstrates a simple use of GridGain grid with
+ * {@code Gridify} annotation.
+ * <p>
+ * String "Hello, World!" is passed as an argument to
+ * {@code sayOnSomeNode(String)} method. Since this method is annotated with
+ * {@code Gridify} annotation it is automatically grid-enabled and
+ * will be executed on remote node. Note, that the only thing user had
+ * to do is annotate method {@code sayOnSomeNode(String)} with {@link Gridify}
+ * annotation, everything else is taken care of by the system.
+ * <p>
+ * <h1 class="header">Starting Remote Nodes</h1>
+ * To try this example you should (but don't have to) start remote grid instances.
+ * You can start as many as you like by executing the following script:
+ * <pre class="snippet">{GRIDGAIN_HOME}/bin/ggstart.{bat|sh}</pre>
+ * Once remote instances are started, you can execute this example from
+ * Eclipse, IntelliJ IDEA, or NetBeans (and any other Java IDE) by simply hitting run
+ * button. You will see that all nodes discover each other and
+ * some of the nodes will participate in task execution (check node
+ * output).
+ * <p>
+ * <h1 class="header">XML Configuration</h1>
+ * If no specific configuration is provided, GridGain will start with
+ * all defaults. For information about GridGain default configuration
+ * refer to {@link org.gridgain.grid.GridFactory} documentation. If you would like to
+ * try out different configurations you should pass a path to Spring
+ * configuration file as 1st command line argument into this example.
+ * The path can be relative to {@code GRIDGAIN_HOME} environment variable.
+ * You should also pass the same configuration file to all other
+ * grid nodes by executing startup script as follows (you will need
+ * to change the actual file name):
+ * <pre class="snippet">{GRIDGAIN_HOME}/bin/ggstart.{bat|sh} examples/config/specific-config-file.xml</pre>
+ * <p>
+ * GridGain examples come with multiple configuration files you can try.
+ * All configuration files are located under {@code GRIDGAIN_HOME/examples/config}
+ * folder.
+ * <p>
+ * <h1 class="header">AOP Configuration</h1>
+ * In order for this example to execute on the grid, any of the following
+ * AOP configurations must be provided (only on the task initiating node).
+ * <h2 class="header">Jboss AOP</h2>
+ * The following configuration needs to be applied to enable JBoss byte code
+ * weaving. Note that GridGain is not shipped with JBoss and necessary
+ * libraries will have to be downloaded separately (they come standard
+ * if you have JBoss installed already):
+ * <ul>
+ * <li>
+ *      The following JVM configuration must be present:
+ *      <ul>
+ *      <li>{@code -javaagent:[path to jboss-aop-jdk50-4.x.x.jar]}</li>
+ *      <li>{@code -Djboss.aop.class.path=[path to gridgain.jar]}</li>
+ *      <li>{@code -Djboss.aop.exclude=org,com -Djboss.aop.include=org.gridgain.examples}</li>
+ *      </ul>
+ * </li>
+ * <li>
+ *      The following JARs should be in a classpath:
+ *      <ul>
+ *      <li>{@code javassist-3.x.x.jar}</li>
+ *      <li>{@code jboss-aop-jdk50-4.x.x.jar}</li>
+ *      <li>{@code jboss-aspect-library-jdk50-4.x.x.jar}</li>
+ *      <li>{@code jboss-common-4.x.x.jar}</li>
+ *      <li>{@code trove-1.0.2.jar}</li>
+ *      </ul>
+ * </li>
+ * </ul>
+ * <p>
+ * <h2 class="header">AspectJ AOP</h2>
+ * The following configuration needs to be applied to enable AspectJ byte code
+ * weaving.
+ * <ul>
+ * <li>
+ *      JVM configuration should include:
+ *      {@code -javaagent:${GRIDGAIN_HOME}/libs/aspectjweaver-1.6.8.jar}
+ * </li>
+ * <li>
+ *      Classpath should contain the {@code ${GRIDGAIN_HOME}/config/aop/aspectj} folder.
+ * </li>
+ * </ul>
+ *
+ * @author 2012 Copyright (C) GridGain Systems
+ * @version 3.6.0c.13012012
+ */
+@Typed
+class GroverAopExample {
+    /**
+     * @param args Command line arguments.
+     */
+    static void main(String[] args) {
+        grover { ->
+            sayOnSomeNode("Hello Cloud World!")
+        }
+    }
+
+    /**
+     * This method mocks business logic for the purpose of this example.
+     *
+     * @param msg Message.
+     */
+    @Gridify
+    private static void sayOnSomeNode(String msg) {
+        println("\n" + msg + "\n")
+    }
+}

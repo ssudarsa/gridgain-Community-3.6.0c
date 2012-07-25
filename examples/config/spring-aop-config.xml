@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    _________        _____ __________________        _____
+    __  ____/___________(_)______  /__  ____/______ ____(_)_______
+    _  / __  __  ___/__  / _  __  / _  / __  _  __ `/__  / __  __ \
+    / /_/ /  _  /    _  /  / /_/ /  / /_/ /  / /_/ / _  /  _  / / /
+    \____/   /_/     /_/   \_,__/   \____/   \__,_/  /_/   /_/ /_/
+
+    Copyright (C) GridGain Systems Licensed under GPLv3, http://www.gnu.org/licenses/gpl.html
+    Version: 3.6.0c.13012012
+-->
+
+<!--
+    GridGain Spring configuration file to startup grid for Spring AOP example.
+
+    When starting a standalone GridGain node, you need to execute the following command:
+    {GRIDGAIN_HOME}/bin/ggstart.{bat|sh} path-to-this-file/spring-aop-config.xml
+
+    When starting GridGain from Java IDE, pass path to this file into GridFactory:
+    GridFactory.start("path-to-this-file/spring-aop-config.xml");
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+    <description>
+        Spring file for Spring AOP example.
+    </description>
+
+    <!-- AOP configuration. -->
+    <bean id="gridifyAspect" class="org.gridgain.grid.gridify.aop.aspectj.GridifyAspectJAspect" scope="singleton"/>
+
+    <bean id="gridifySetToSetAspect" class="org.gridgain.grid.gridify.aop.aspectj.GridifySetToSetAspectJAspect"
+          scope="singleton"/>
+
+    <bean id="gridifySetToValueAspect" class="org.gridgain.grid.gridify.aop.aspectj.GridifySetToValueAspectJAspect"
+          scope="singleton"/>
+
+    <aop:config proxy-target-class="false">
+        <aop:aspect ref="gridifyAspect">
+            <aop:around pointcut="@annotation(org.gridgain.grid.gridify.Gridify)" method="gridify"/>
+        </aop:aspect>
+
+        <aop:aspect ref="gridifySetToSetAspect">
+            <aop:around pointcut="@annotation(org.gridgain.grid.gridify.GridifySetToSet)" method="gridify"/>
+        </aop:aspect>
+
+        <aop:aspect ref="gridifySetToValueAspect">
+            <aop:around pointcut="execution(@org.gridgain.grid.gridify.GridifySetToValue * *(..))" method="gridify"/>
+        </aop:aspect>
+    </aop:config>
+
+    <!-- Annotated bean for Spring AOP configuration example. -->
+    <bean id="springMathematics" class="org.gridgain.examples.gridify.GridifySpringAnnotatedMathematics" scope="singleton"/>
+
+    <!-- Grid configuration bean. -->
+    <bean id="grid.cfg" class="org.gridgain.grid.GridConfigurationAdapter" scope="singleton"/>
+</beans>

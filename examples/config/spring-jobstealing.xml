@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    _________        _____ __________________        _____
+    __  ____/___________(_)______  /__  ____/______ ____(_)_______
+    _  / __  __  ___/__  / _  __  / _  / __  _  __ `/__  / __  __ \
+    / /_/ /  _  /    _  /  / /_/ /  / /_/ /  / /_/ / _  /  _  / / /
+    \____/   /_/     /_/   \_,__/   \____/   \__,_/  /_/   /_/ /_/
+
+    Copyright (C) GridGain Systems Licensed under GPLv3, http://www.gnu.org/licenses/gpl.html
+    Version: 3.6.0c.13012012
+-->
+
+<!--
+    GridGain Spring configuration file to startup grid with node benchmarks enabled.
+
+    When starting a standalone GridGain node, you need to execute the following command:
+    {GRIDGAIN_HOME}/bin/ggstart.{bat|sh} path-to-this-file/spring-benchmark.xml
+
+    When starting GridGain from Java IDE, pass path to this file into GridFactory:
+    GridFactory.start("path-to-this-file/spring-benchmark.xml");
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+    <!--
+        Optional description.
+    -->
+    <description>
+        Spring file for grid configuration with benchmark.
+    </description>
+
+    <!--
+        Configuration below demonstrates how to setup a collision and failover SPI's
+        to enable work stealing from overloaded nodes to underloaded nodes.
+
+        Note that for job stealing to work, you must always use both,
+        GridJobStealingCollisionSpi and GridJobStealingFailoverSPI.
+    -->
+    <bean id="grid.cfg" class="org.gridgain.grid.GridConfigurationAdapter" scope="singleton">
+        <property name="collisionSpi">
+            <!--
+                Job stealing collision SPI.
+            -->
+            <bean class="org.gridgain.grid.spi.collision.jobstealing.GridJobStealingCollisionSpi">
+                <!-- Maximum number of active jobs to execute concurrently at any time. -->
+                <property name="activeJobsThreshold" value="100"/>
+
+                <!--
+                    Maximum number of waiting jobs for a node to start stealing.
+                    If number of waiting jobs goes below or becomes equal to
+                    this threshold, the SPI will attempt to start stealing
+                    jobs from more overloaded nodes.
+                -->
+                <property name="waitJobsThreshold" value="0"/>
+
+                <!--
+                    Job stealing message expiration time in milliseconds. If no response was
+                    received to job stealing request within this time, then message will
+                    be considered load, and request will be resent (potentially to other node).
+                -->
+                <property name="messageExpireTime" value="1000"/>
+            </bean>
+        </property>
+
+        <!--
+            Job stealing failover SPI. Must be used together with GridJobStealingCollisionSpi.
+        -->
+        <property name="failoverSpi">
+            <bean class="org.gridgain.grid.spi.failover.jobstealing.GridJobStealingFailoverSpi">
+                <!--
+                    Maximum number of failover hops allowed for any given job until it fails.
+                -->
+                <property name="maximumFailoverAttempts" value="5"/>
+            </bean>
+        </property>
+    </bean>
+</beans>

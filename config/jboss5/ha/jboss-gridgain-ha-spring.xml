@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    _________        _____ __________________        _____
+    __  ____/___________(_)______  /__  ____/______ ____(_)_______
+    _  / __  __  ___/__  / _  __  / _  / __  _  __ `/__  / __  __ \
+    / /_/ /  _  /    _  /  / /_/ /  / /_/ /  / /_/ / _  /  _  / / /
+    \____/   /_/     /_/   \_,__/   \____/   \__,_/  /_/   /_/ /_/
+
+    Copyright (C) GridGain Systems Licensed under GPLv3, http://www.gnu.org/licenses/gpl.html
+    Version: 3.6.0c.13012012
+-->
+
+<!--
+    JBoss GridGain configuration.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+    <description>JBoss Spring file for GridGain configuration.</description>
+
+    <!--
+        Grid JBoss configuration.
+    -->
+    <bean id="grid.cfg" class="org.gridgain.grid.GridConfigurationAdapter" scope="singleton">
+        <!--
+            Uncomment to specify non-default grid instance name.
+        -->
+        <!--
+        <property name="gridName" value="mygrid"/>
+        -->
+
+        <!--
+            Uncomment the following section if you wish to add local node benchmark
+            to user attributes. You can also add any other node attribute specific
+            to your application.
+        -->
+        <!--
+        <property name="userAttributes">
+            <map>
+                <entry key="grid.node.benchmark">
+                    <bean class="org.gridgain.grid.benchmarks.GridLocalNodeBenchmark" init-method="start"/>
+                </entry>
+            </map>
+        </property>
+        -->
+
+        <!--
+            Custom configuration for JBoss discovery SPI.
+        -->
+        <property name="discoverySpi">
+            <bean class="org.gridgain.grid.spi.discovery.jboss5.GridJbossDiscoverySpi">
+                <!--
+                    Default partition JNDI name is '/HAPartition/DefaultPartition'.
+                    Uncomment the following property to set a different partition
+                    JNDI name.
+                -->
+                <!--
+                <property name="partitionJndiName" value="/HAPartition/DefaultPartition"/>
+                -->
+                <!--
+                    Default cache configuration name is 'ha-partition'.
+                    Uncomment the following property to set a different cache configuration
+                    name.
+                -->
+                <!--
+                <property name="cacheConfigurationName" value="ha-partition"/>
+                -->
+            </bean>
+        </property>
+    </bean>
+</beans>

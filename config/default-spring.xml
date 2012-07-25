@@ -1,0 +1,831 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    _________        _____ __________________        _____
+    __  ____/___________(_)______  /__  ____/______ ____(_)_______
+    _  / __  __  ___/__  / _  __  / _  / __  _  __ `/__  / __  __ \
+    / /_/ /  _  /    _  /  / /_/ /  / /_/ /  / /_/ / _  /  _  / / /
+    \____/   /_/     /_/   \_,__/   \____/   \__,_/  /_/   /_/ /_/
+
+    Copyright (C) GridGain Systems Licensed under GPLv3, http://www.gnu.org/licenses/gpl.html
+    Version: 3.6.0c.13012012
+-->
+
+<!--
+    Command line (default) grid configuration.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+    <description>Main Spring file for grid configuration.</description>
+
+    <!-- Import caches definition. -->
+    <import resource="default-spring-cache.xml"/>
+
+    <!--
+        Grid default configuration.
+
+        All configuration properties are commented. Uncomment any property to
+        provide a non-default value for it.
+    -->
+    <bean id="grid.cfg" class="org.gridgain.grid.GridConfigurationAdapter" scope="singleton">
+        <!--
+            Uncomment to specify non-default grid instance name.
+            By default, grid name will be null.
+        -->
+        <!--
+        <property name="gridName" value="mygrid"/>
+        -->
+
+        <!--
+            Uncomment to specify local bind address for all GridGain components.
+        -->
+        <!--
+        <property name="localHost" value="1.2.3.4"/>
+        -->
+
+        <!--
+            Uncomment to specify non-default location to GridGain license file.
+        -->
+        <!--
+        <property name="licenseUrl" value="file:///my/license/path/gridgain-license.xml"/>
+        -->
+
+        <!--
+            Uncomment to provide custom cache configuration. Empty list disables data grid on the node.
+        -->
+        <!--
+        <property name="cacheConfiguration">
+            <list>
+                <ref bean="replicated.cache.cfg"/>
+            </list>
+        </property>
+        -->
+
+        <!--
+            Uncomment the following section if you wish to add local node benchmark
+            to user attributes. You can also add any other node attribute specific
+            to your application. Attributes for this node will be available from any
+            other node in the grid.
+
+            Attributes can be used for segmenting grid nodes into groups. See
+            Wiki documentation for more information about node segmentation.
+
+            Grid local node benchmark is a good example of a complex attribute that
+            can be added to the node at startup.
+
+            Note that you will have to use 'grid.node.benchmark' grid node attribute name
+            to get the benchmark for the given node.
+
+            Note that all System Properties and Environment Variables are set as node
+            attributes automatically by GridGain.
+        -->
+        <!--
+        <property name="userAttributes">
+            <map>
+                <entry key="grid.node.benchmark">
+                    <bean class="org.gridgain.grid.benchmarks.GridLocalNodeBenchmark" init-method="start"/>
+                </entry>
+            </map>
+        </property>
+        -->
+
+        <!--
+            Uncomment to disable peer class loading.
+        -->
+        <!--
+        <property name="peerClassLoadingEnabled" value="false"/>
+        -->
+
+        <!--
+            Uncomment to change defaults for node metrics updates.
+            By default, metricsExpireTime is 600,000 (10 minutes)
+            and metricsHistorySize is 10,000.
+        -->
+        <!--
+        <property name="metricsExpireTime" value="300000"/>
+        <property name="metricsHistorySize" value="20000"/>
+        -->
+
+        <!--
+            Uncomment to explicitly specify which packages should
+            be loaded from peer nodes even if they are present in
+            local classpath.
+        -->
+        <!--
+        <property name="p2PLocalClassPathExclude">
+            <list>
+                <value>org.springframework.*</value>
+                <value>org.hibernate.*</value>
+            </list>
+        </property>
+        -->
+
+        <!--
+            Uncomment to explicitly specify which event types should
+            be recorded. Note, that either the include event types or
+            the exclude event types can be established.
+        -->
+        <!--
+        <property name="includeEventTypes">
+            <list>
+                <value>40</value>
+                <value>41</value>
+                <value>43</value>
+            </list>
+        </property>
+        -->
+
+        <!--
+            Uncomment to explicitly specify which event types should
+            not be recorded. Note, that either the include event types
+            or the exclude event types can be established.
+        -->
+        <!--
+        <property name="excludeEventTypes">
+            <list>
+                <value>40</value>
+                <value>41</value>
+                <value>43</value>
+            </list>
+        </property>
+        -->
+
+        <!--
+            Uncomment to exclude all system and environment properties from
+            node attributes. You can also specify specific names of the properties
+            you would like to include.
+
+            On large grids, > 200 nodes, keeping track of all system and environment
+            properties for all nodes can get expensive time and memory wise and it
+            makes sense to only include the properties you need, or not include any.
+        -->
+        <!--
+        <property name="includeProperties">
+            <list/>
+        </property>
+        -->
+
+        <!--
+            Deployment mode for this node.
+
+            Allowed values are PRIVATE, ISOLATED, SHARED, CONTINUOUS (default is SHARED).
+        -->
+        <!--
+        <property name="deploymentMode" value="ISOLATED"/>
+        -->
+
+        <!--
+            Size of cache for missed resources. If value is greater than 0,
+            then attempts for resources that could not be loaded are cached,
+            and consequent requests for this resources will not be made.
+            If value is 0, then request for all resources will be made
+            every time.
+        -->
+        <!--
+        <property name="peerClassLoadingMissedResourcesCacheSize" value="100"/>
+        -->
+
+        <!--
+            Timeout for system network messages, such as peer class loading requests, in milliseconds.
+        -->
+        <!--
+        <property name="networkTimeout" value="5000"/>
+        -->
+
+        <!--
+            Logger to use. By default 'config/default-log4j.xml' logger file will
+            be used. If such file is not found, then default GridGain configuration
+            for logging will be used.
+        -->
+        <!--
+        <property name="gridLogger">
+            <bean class="org.gridgain.grid.logger.log4j.GridLog4jLogger">
+                <constructor-arg type="java.lang.String" value="config/default-log4j.xml"/>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Logger to use. This is an example of JCL logger configuration wrapped around log4j one.
+            We use default log4j configuration file here.
+        -->
+        <!--
+        <property name="gridLogger">
+            <bean class="org.gridgain.grid.logger.jcl.GridJclLogger">
+                <constructor-arg type="org.apache.commons.logging.Log">
+                    ...Add specific adapter here.
+                </constructor-arg>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Logger to use. This is an example of using Java logging with default "global" logger.
+        -->
+        <!--
+        <property name="gridLogger">
+            <bean class="org.gridgain.grid.logger.java.GridJavaLogger">
+                <constructor-arg type="java.util.logging.Logger">
+                    <bean class="java.util.logging.Logger">
+                        <constructor-arg type="java.lang.String" value="global"/>
+                    </bean>
+                </constructor-arg>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Logger to use. This is an example of using SLF4J logging.
+        -->
+        <!--
+        <property name="gridLogger">
+            <bean class="org.gridgain.grid.logger.slf4j.GridSlf4jLogger"/>
+        </property>
+        -->
+
+        <!--
+            Marshaller implementation based on optimized GridGain implementation. This is default marshaller
+            used by GridGain and does not have to be uncommented.
+        -->
+        <!--
+        <property name="marshaller">
+            <bean class="org.gridgain.grid.marshaller.optimized.GridOptimizedMarshaller"/>
+        </property>
+        -->
+
+        <!--
+            Marshaller implementation based on JBoss Serialization.
+        -->
+        <!--
+        <property name="marshaller">
+            <bean class="org.gridgain.grid.marshaller.jboss.GridJBossMarshaller"/>
+        </property>
+        -->
+
+        <!--
+            Marshaller implementation based on java.io.ObjectStream provided by JDK.
+            Uncomment if need to use standard JDK serialization.
+        -->
+        <!--
+        <property name="marshaller">
+            <bean class="org.gridgain.grid.marshaller.jdk.GridJdkMarshaller"/>
+        </property>
+        -->
+
+        <!--
+            Marshaller implementation based on CodeHaus XStream XML serialization.
+            Use it when working with data that does not implement java.io.Serializable.
+        -->
+        <!--
+        <property name="marshaller">
+            <bean class="org.gridgain.grid.marshaller.xstream.GridXstreamMarshaller"/>
+        </property>
+        -->
+
+        <!--
+            Ordered collection of lifecycle beans. Lifecycle beans will be notified
+            about grid events in the same order as specified.
+
+            Use lifecycle beans to add custom logic before or after grid startup and
+            stopping routines.
+        -->
+        <!--
+        <property name="lifecycleBeans">
+            <list>
+                <bean class="foo.bar.FooBarLifecycleBean1"/>
+                <bean class="foo.bar.FooBarLifecycleBean2"/>
+            </list>
+        </property>
+        -->
+
+        <!--
+            Flag to enable REST-based access to GridGain. By default, REST access is disabled.
+        -->
+        <!--
+        <property name="restEnabled" value="true"/>
+        -->
+
+        <!--
+            Uncomment this property only if needed to point to Jetty XML configuration file
+            not located under default location.
+        -->
+        <!--
+        <property name="restJettyPath" value="config/rest-jetty.xml"/>
+        -->
+
+        <!--
+            Uncomment to provide custom configuration for executor service.
+            By default thread pool size is 100.
+            All threads are pre-started and are available for use.
+        -->
+        <!--
+        <property name="executorService">
+            <bean class="org.gridgain.grid.thread.GridThreadPoolExecutor">
+                <constructor-arg type="int" value="200"/>
+                <constructor-arg type="int" value="200"/>
+                <constructor-arg type="long">
+                    <util:constant static-field="java.lang.Long.MAX_VALUE"/>
+                </constructor-arg>
+                <constructor-arg type="java.util.concurrent.BlockingQueue">
+                    <bean class="java.util.concurrent.LinkedBlockingQueue"/>
+                </constructor-arg>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment to provider custom value for executor service shutdown flag.
+            Default value - true.
+        -->
+        <!--
+        <property name="executorServiceShutdown" value="true"/>
+        -->
+
+        <!--
+            Uncomment to provide custom configuration for System executor service.
+            By default the thread pool size is 5 which should be good enough.
+            Threads are not started unless used.
+        -->
+        <!--
+        <property name="systemExecutorService">
+            <bean class="org.gridgain.grid.thread.GridThreadPoolExecutor">
+                <constructor-arg type="int" value="200"/>
+                <constructor-arg type="int" value="200"/>
+                <constructor-arg type="long">
+                    <util:constant static-field="java.lang.Long.MAX_VALUE"/>
+                </constructor-arg>
+                <constructor-arg type="java.util.concurrent.BlockingQueue">
+                    <bean class="java.util.concurrent.LinkedBlockingQueue"/>
+                </constructor-arg>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment to provider custom value for system executor service shutdown flag.
+            Default value - true.
+        -->
+        <!--
+        <property name="systemExecutorServiceShutdown" value="true"/>
+        -->
+
+        <!--
+            Uncomment to provide custom configuration for P2P executor service.
+            By default the thread pool size is 20 which should be good enough.
+            Threads are not started unless used.
+        -->
+        <!--
+        <property name="peerClassLoadingExecutorService">
+            <bean class="org.gridgain.grid.thread.GridThreadPoolExecutor">
+                <constructor-arg type="int" value="10"/>
+                <constructor-arg type="int" value="10"/>
+                <constructor-arg type="long">
+                    <util:constant static-field="java.lang.Long.MAX_VALUE"/>
+                </constructor-arg>
+                <constructor-arg type="java.util.concurrent.BlockingQueue">
+                    <bean class="java.util.concurrent.LinkedBlockingQueue"/>
+                </constructor-arg>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment to provider custom value for peer class loading executor service shutdown flag.
+            Default value - true.
+        -->
+        <!--
+        <property name="peerClassLoadingExecutorServiceShutdown" value="true"/>
+        -->
+
+        <!--
+            Uncomment to provide non-default configuration for RoundRobin Load Balancing SPI.
+            Note that RoundRobin Load Balancing SPI with 'perTask' set to 'true' is used be
+            default, so uncomment it if you need to change default parameter configuration.
+        -->
+        <!--
+        <property name="loadBalancingSpi">
+            <bean class="org.gridgain.grid.spi.loadbalancing.roundrobin.GridRoundRobinLoadBalancingSpi">
+                <property name="perTask" value="false"/>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment to provide non-default configuration for Weighted Random Load Balancing SPI.
+        -->
+        <!--
+        <property name="loadBalancingSpi">
+            <bean class="org.gridgain.grid.spi.loadbalancing.weightedrandom.GridWeightedRandomLoadBalancingSpi">
+                <property name="useWeights" value="true"/>
+                <property name="nodeWeight" value="10"/>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment to provide non-default configuration for Adaptive Load Balancing SPI.
+            Note that we use GridAdaptiveProcessingTimeLoadProbe, but you are free to
+            provide your own node load probing to use.
+        -->
+        <!--
+        <property name="loadBalancingSpi">
+            <bean class="org.gridgain.grid.spi.loadbalancing.adaptive.GridAdaptiveLoadBalancingSpi">
+                <property name="loadProbe">
+                    <bean class="org.gridgain.grid.spi.loadbalancing.adaptive.GridAdaptiveProcessingTimeLoadProbe">
+                        <constructor-arg value="true"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment to provide non-default configuration for Shared File System Checkpoint SPI.
+            Note that Shared File System Checkpoint SPI is used be default, so there is no need
+            to uncomment this section if you don't filter to change any default
+            configuration properties.
+        -->
+        <!--
+        <property name="checkpointSpi">
+            <bean class="org.gridgain.grid.spi.checkpoint.sharedfs.GridSharedFsCheckpointSpi">
+                <property name="directoryPaths">
+                    <list>
+                        <value>/work/checkpoint/sharedfs</value>
+                        <value>/other/path/sharedfs</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment to provide configuration for Database Checkpoint SPI.
+
+            Note that all properties other than 'datasource' are optional.
+        -->
+        <!--
+        <property name="checkpointSpi">
+            <bean class="org.gridgain.grid.spi.checkpoint.jdbc.GridJdbcCheckpointSpi">
+                <property name="dataSource" ref="anyPooledDataSourceBean"/>
+
+                <property name="checkpointTableName" value="CHECKPOINTS"/>
+                <property name="numberOfRetries" value="2"/>
+                <property name="keyFieldName" value="NAME"/>
+                <property name="keyFieldType" value="VARCHAR(256)"/>
+                <property name="valueFieldName" value="VALUE"/>
+                <property name="valueFieldType" value="BLOB"/>
+                <property name="expireDateFieldName" value="EXPIRE_DATE"/>
+                <property name="expireDateFieldType" value="DATETIME"/>
+
+                <property name="user" value="test"/>
+                <property name="password" value="test"/>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment to provide non-default configuration for GigaSpaces Checkpoint SPI.
+        -->
+        <!--
+        <property name="checkpointSpi">
+            <bean class="org.gridgain.grid.spi.checkpoint.gigaspaces.GridGigaSpacesCheckpointSpi">
+                <property name="spaceUrl" value="/./mySpaceMap" />
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment to provide configuration for Job Stealing Collision SPI.
+
+            Make sure to set parallel jobs number to appropriate value, usually equal
+            to the number of threads in the execution pool (default is 100).
+        -->
+        <!--
+        <property name="collisionSpi">
+            <bean class="org.gridgain.grid.spi.collision.jobstealing.GridJobStealingCollisionSpi">
+                <property name="activeJobsThreshold" value="100"/>
+                <property name="waitJobsThreshold" value="0"/>
+                <property name="maximumStealingAttempts" value="10"/>
+                <property name="stealingEnabled" value="true"/>
+                <property name="messageExpireTime" value="1000"/>
+                <property name="stealingAttributes">
+                    <map>
+                        <entry key="node.segment" value="foobar"/>
+                    </map>
+                </property>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment to provide configuration for Priority Queue Collision SPI.
+
+            Make sure to set parallel jobs number to appropriate value, usually equal
+            to the number of threads in the execution pool (default is 100).
+        -->
+        <!--
+        <property name="collisionSpi">
+            <bean class="org.gridgain.grid.spi.collision.priorityqueue.GridPriorityQueueCollisionSpi">
+                <property name="parallelJobsNumber" value="100"/>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment to use FIFO Collision SPI and provide configuration for it.
+            Note that FIFO Collision SPI is used be default, so there is no need
+            to uncomment this section if you don't plan to change any default
+            configuration properties.
+
+            Make sure to set parallel jobs number to appropriate value, usually equal
+            to the number of threads in the execution pool (default is 100).
+        -->
+        <!--
+        <property name="collisionSpi">
+            <bean class="org.gridgain.grid.spi.collision.fifoqueue.GridFifoQueueCollisionSpi">
+                <property name="parallelJobsNumber" value="1"/>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment to provide custom configuration for TCP communication SPI.
+            Note that TCP communication SPI is used by default, so there is no need
+            to uncomment this section if you don't plan to change any default
+            configuration properties.
+        -->
+        <!--
+        <property name="communicationSpi">
+            <bean class="org.gridgain.grid.spi.communication.tcp.GridTcpCommunicationSpi">
+                <property name="json"
+                    value="{directBuffer: 'false', localAddress='1.2.3.4', localPort: 47100, localPortRange: 100}"/>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment to provide custom configuration for URI deployment SPI.
+        -->
+        <!--
+        <property name="deploymentSpi">
+            <bean class="org.gridgain.grid.spi.deployment.uri.GridUriDeploymentSpi">
+                <property name="temporaryDirectoryPath" value="/tmp/grid"/>
+                <property name="uriList">
+                    <list>
+                        <value>http://www.site.com/tasks/task.gar</value>
+                        <value>file:///home/user1/task.gar</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment this to provide custom configuration for TCP discovery SPI (Amazon S3 IP finder).
+        -->
+        <!--
+        <property name="discoverySpi">
+            <bean class="org.gridgain.grid.spi.discovery.tcp.GridTcpDiscoverySpi">
+                <property name="ipFinder">
+                    <bean class="org.gridgain.grid.spi.discovery.tcp.ipfinder.s3.GridTcpDiscoveryS3IpFinder">
+                        <property name="awsCredentials">
+                            <bean class="com.amazonaws.auth.BasicAWSCredentials">
+                                <constructor-arg value="YOUR_ACCESS_KEY_ID" />
+                                <constructor-arg value="YOUR_SECRET_ACCESS_KEY" />
+                            </bean>
+                        </property>
+                    </bean>
+                </property>
+                <property name="heartbeatFrequency" value="2000"/>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment this to provide custom configuration for TCP discovery SPI (shared folder IP finder).
+        -->
+        <!--
+        <property name="discoverySpi">
+            <bean class="org.gridgain.grid.spi.discovery.tcp.GridTcpDiscoverySpi">
+                <property name="ipFinder">
+                    <bean class="org.gridgain.grid.spi.discovery.tcp.ipfinder.sharedfs.GridTcpDiscoverySharedFsIpFinder">
+                        <property name="path" value="PATH_TO_SHARED_FOLDER"/>
+                    </bean>
+                </property>
+                <property name="heartbeatFrequency" value="2000"/>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment this to provide custom configuration for TCP discovery SPI (predefined addresses).
+        -->
+        <!--
+        <property name="discoverySpi">
+            <bean class="org.gridgain.grid.spi.discovery.tcp.GridTcpDiscoverySpi">
+                <property name="ipFinder">
+                    <bean class="org.gridgain.grid.spi.discovery.tcp.ipfinder.vm.GridTcpDiscoveryVmIpFinder">
+                        <property name="addresses">
+                            <list>
+                                <value>YOUR_IP_ADDRESS:47500</value>
+                            </list>
+                        </property>
+                    </bean>
+                </property>
+                <property name="heartbeatFrequency" value="2000"/>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment this to provide custom configuration for TCP discovery SPI (predefined addresses)
+            without metrics store using JSON configuration.
+        -->
+        <!--
+        <property name="discoverySpi">
+            <bean class="org.gridgain.grid.spi.discovery.tcp.GridTcpDiscoverySpi">
+                <property name="json" value="{heartbeatFrequency: 5000; networkTimeout: 4000; ipFinder: {addresses: ['1.2.3.4:47500']; @class:'org.gridgain.grid.spi.discovery.tcp.ipfinder.vm.GridTcpDiscoveryVmIpFinder'}}"/>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment this to provide Multicast discovery SPI with custom multicast group.
+        -->
+        <!--
+        <property name="discoverySpi">
+            <bean class="org.gridgain.grid.spi.discovery.multicast.GridMulticastDiscoverySpi">
+                <property name="multicastGroup" value="228.10.10.157"/>
+                <property name="localAddress" value="1.2.3.4"/>
+                <property name="heartbeatFrequency" value="2000"/>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment this to provide custom JBoss discovery SPI.
+
+            NOTE: JARs for JBoss HA discovery should be available on classpath.
+            If you use ggstart.{sh|bat} script to start grid node than you only need
+            to change setenv.{sh|bat} script in the same directory to add necessary
+            JARs to GridGain class path.
+        -->
+        <!--
+         <property name="discoverySpi">
+             <bean class="org.gridgain.grid.spi.discovery.jboss.GridJbossDiscoverySpi"/>
+         </property>
+        -->
+
+        <!--
+            Uncomment this to provide custom event storage SPI.
+        -->
+        <!--
+        <property name="eventStorageSpi">
+            <bean class="org.gridgain.grid.spi.eventstorage.memory.GridMemoryEventStorageSpi">
+                <property name="expireCount" value="1000"/>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment this to provide Always Failover SPI.
+
+            Note that Always Failover SPI is used be default, so there is no need
+            to uncomment this section if you don't plan to change any default
+            configuration properties.
+        -->
+        <!--
+        <property name="failoverSpi">
+            <bean class="org.gridgain.grid.spi.failover.always.GridAlwaysFailoverSpi">
+                <property name="maximumFailoverAttempts" value="5"/>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment this to use Job Stealing Failover SPI.
+        -->
+        <!--
+        <property name="failoverSpi">
+            <bean class="org.gridgain.grid.spi.failover.jobstealing.GridJobStealingFailoverSpi">
+                <property name="maximumFailoverAttempts" value="5"/>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment this to provide Never Failover SPI.
+        -->
+        <!--
+        <property name="failoverSpi">
+            <bean class="org.gridgain.grid.spi.failover.never.GridNeverFailoverSpi"/>
+        </property>
+        -->
+
+        <!--
+            Uncomment this to provide custom topology SPI.
+        -->
+        <!--
+        <property name="topologySpi">
+            <bean class="org.gridgain.grid.spi.topology.basic.GridBasicTopologySpi">
+                <property name="json" value="{localNode: 'false', remoteNodes: 'true'}"/>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment this to provide custom attributes topology SPI.
+        -->
+        <!--
+        <property name="topologySpi">
+            <bean class="org.gridgain.grid.spi.topology.attributes.GridAttributesTopologySpi">
+               <property name="attributes">
+                    <map>
+                        <entry key="key1">
+                            <value>value1</value>
+                        </entry>
+                        <entry key="key2">
+                            <value>value2</value>
+                        </entry>
+                    </map>
+                </property>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment this to provide custom filter topology SPI.
+        -->
+        <!--
+        <property name="topologySpi">
+            <bean class="org.gridgain.grid.spi.topology.nodefilter.GridNodeFilterTopologySpi">
+               <property name="filter">
+                    <map>
+                        <entry key="myTaskName">
+                            <bean class="org.gridgain.grid.lang.GridJexlPredicate2">
+                                <constructor-arg>
+                                    <value>
+                                        <![CDATA[elem1.metrics().availableProcessors > 1 &&
+                                                 elem1.metrics().averageCpuLoad < 0.5 &&
+                                                 elem1.attributes().get('os.name') == 'Windows XP']]>
+                                    </value>
+                                </constructor-arg>
+                            </bean>
+                        </entry>
+                    </map>
+                </property>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment this to provide custom metrics SPI. Note that
+            GridBasicMetricsSpi is used by default and requires no
+            configuration, so basically there is no reason to uncomment
+            it unless you plan to provide your own implementation.
+        -->
+        <!--
+        <property name="metricsSpi">
+            <bean class="org.gridgain.grid.spi.metrics.jdk.GridJdkRuntimeMetricsSpi"/>
+        </property>
+        -->
+
+        <!--
+            Uncomment this to provide custom swapspace SPI.
+            Note that GridFileSwapSpaceSpi is used by default.
+        -->
+        <!--
+        <property name="swapSpaceSpi">
+            <bean class="org.gridgain.grid.spi.swapspace.file.GridFileSwapSpaceSpi">
+                <property name="maximumSwapSize" value="1048576"/>
+                <property name="persistent" value="false"/>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Uncomment this to provide pre-configured local event listeners.
+            Listener class must implement GridLocalEventListener.
+        -->
+        <!--
+        <property name="localEventListeners">
+            <map>
+                <entry>
+                    <key>
+                        <bean class="package.CustomLocalEventListener"/>
+                    </key>
+                    <list>
+                        <util:constant static-field="org.gridgain.grid.GridEventType.EVT_NODE_JOINED"/>
+                        <util:constant static-field="org.gridgain.grid.GridEventType.EVT_NODE_LEFT"/>
+                    </list>
+                </entry>
+            </map>
+        </property>
+        -->
+    </bean>
+</beans>

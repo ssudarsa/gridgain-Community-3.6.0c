@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    _________        _____ __________________        _____
+    __  ____/___________(_)______  /__  ____/______ ____(_)_______
+    _  / __  __  ___/__  / _  __  / _  / __  _  __ `/__  / __  __ \
+    / /_/ /  _  /    _  /  / /_/ /  / /_/ /  / /_/ / _  /  _  / / /
+    \____/   /_/     /_/   \_,__/   \____/   \__,_/  /_/   /_/ /_/
+
+    Copyright (C) GridGain Systems Licensed under GPLv3, http://www.gnu.org/licenses/gpl.html
+    Version: 3.6.0c.13012012
+-->
+
+<!DOCTYPE aspectj PUBLIC
+    "-//AspectJ//DTD 1.5.0//EN"
+    "http://www.eclipse.org/aspectj/dtd/aspectj_1_5_0.dtd">
+
+<aspectj>
+    <!--
+        Weaver options.
+        To display weaved classes change weaver definition as follows:
+            <weaver options="-verbose -showWeaveInfo">
+              ...
+            </weaver>
+    -->
+    <weaver options="-Xset:weaveJavaPackages=true,weaveJavaxPackages=true">
+        <!--
+            Use
+                <include within="some.package.*"/>
+                or
+                <exclude within="other.package.*"/>
+            tags to disable/enable online weaving for specific classes and/or packages.
+        -->
+        <!-- BEA libs. -->
+        <exclude within="weblogic..*"/>
+        <exclude within="com.bea..*"/>
+        <exclude within="bea..*"/>
+        <exclude within="com.adventnet..*"/>
+        <exclude within="com.asn1c..*"/>
+        <exclude within="com.beasys..*"/>
+        <exclude within="com.bluecast..*"/>
+        <exclude within="com.certicom..*"/>
+        <exclude within="com.netscape..*"/>
+        <exclude within="com.octetstring..*"/>
+        <exclude within="com.oroinc..*"/>
+        <exclude within="com.rsa..*"/>
+        <exclude within="com.ziclix..*"/>
+        <exclude within="kodo.jdbc..*"/>
+        <exclude within="jxxload_help..*"/>
+        <exclude within="netscape..*"/>
+        <exclude within="org.mozilla..*"/>
+        <exclude within="org.python..*"/>
+
+        <!-- JUnit libs. -->
+        <exclude within="junit.extensions..*"/>
+        <exclude within="junit.framework..*"/>
+        <exclude within="junit.runner..*"/>
+        <exclude within="junit.textui..*"/>
+        <exclude within="org.hamcrest..*"/>
+
+        <!-- GigaSpaces libs. -->
+        <exclude within="com.j_spaces..*"/>
+        <exclude within="com.gigaspaces..*"/>
+        <exclude within="net.jini..*"/>
+        <exclude within="org.garret..*"/>
+        <exclude within="com.ccg..*"/>
+        <exclude within="org.safehaus..*"/>
+
+        <!-- WebSphere (IBM) libs. -->
+        <exclude within="com.ibm..*"/>
+
+        <!-- Spring libs. -->
+        <exclude within="org.springframework..*"/>
+        <exclude within="org.aopalliance..*"/>
+
+        <!-- SUN libs. -->
+        <exclude within="com.sun..*"/>
+        <exclude within="sun..*"/>
+        <exclude within="com.iplanet..*"/>
+        <exclude within="org.jcp..*"/>
+        <exclude within="org.omg..*"/>
+        <exclude within="org.omg..*"/>
+
+        <!-- Backport Concurrent libs. -->
+        <exclude within="edu.emory..*"/>
+
+        <!-- Oracle. -->
+        <exclude within="oracle..*"/>
+
+        <!-- Hibernate libs. -->
+        <exclude within="org.hibernate..*"/>
+
+        <!-- JBoss libs. -->
+        <exclude within="org.jboss..*"/>
+
+        <!-- JXInsight (tracing) libs. -->
+        <exclude within="com.jinspired..*"/>
+
+        <!-- Tangosol libs. -->
+        <exclude within="com.tangosol..*"/>
+
+        <!-- Apache libs. -->
+        <exclude within="org.apache..*"/>
+
+        <!-- Javassist libs. -->
+        <exclude within="javassist..*"/>
+
+        <!-- W3C libs. -->
+        <exclude within="org.w3c..*"/>
+
+        <!-- Tidy libs. -->
+        <exclude within="gnu.trove..*"/>
+
+        <!-- JNP libs. -->
+        <exclude within="org.jnp..*"/>
+
+        <!-- Hyperic libs. -->
+        <exclude within="org.hyperic..*"/>
+
+        <!-- Groovy libs. -->
+        <exclude within="groovy..*"/>
+        <exclude within="org.codehaus.groovy..*"/>
+
+        <!-- Scala libs. -->
+        <exclude within="scala..*"/>
+
+        <!-- Enterprise DT FTP libs. -->
+        <exclude within="com.enterprisedt..*"/>
+
+        <!-- Apache Oro lib. -->
+        <exclude within="org.apache.oro..*"/>
+
+        <!-- XStream libs. -->
+        <exclude within="com.thoughtworks.xstream..*"/>
+        <exclude within="org.xmlpull..*"/>
+
+        <!-- SLF4J libs. -->
+        <exclude within="org.slf4j..*"/>
+
+        <!-- 'javax' libs. -->
+        <exclude within="javax..*"/>
+
+        <!-- JSON Lib libs. -->
+        <exclude within="net.sf.json..*"/>
+
+        <!-- EZMorph libs. -->
+        <exclude within="net.sf.ezmorph..*"/>
+
+        <!-- Jetty libs. -->
+        <exclude within="org.mortbay..*"/>
+
+        <!-- H2 Database Engine libs. -->
+        <exclude within="org.h2..*"/>
+
+        <!-- Cron4J libs. -->
+        <exclude within="it.sauronsoftware.cron4j..*"/>
+
+        <!-- Amazon libs. -->
+        <exclude within="com.amazon..*"/>
+        <exclude within="com.amazonaws..*"/>
+    </weaver>
+
+    <aspects>
+        <!-- Declare @Gridify aspect to the weaver. -->
+        <aspect name="org.gridgain.grid.gridify.aop.aspectj.GridifyAspectJAspect"/>
+        <aspect name="org.gridgain.grid.gridify.aop.aspectj.GridifySetToValueAspectJAspect"/>
+        <aspect name="org.gridgain.grid.gridify.aop.aspectj.GridifySetToSetAspectJAspect"/>
+        <aspect name="org.gridgain.grid.test.aop.aspectj.GridifyJunitAspectJAspect"/>
+
+        <!-- Declare folder to search for aspects. -->
+        <include within="org.gridgain.grid.gridify.aop.aspectj.*"/>
+        <include within="org.gridgain.grid.test.aop.aspectj.*"/>
+
+        <!-- BEA libs. -->
+        <exclude within="weblogic..*"/>
+        <exclude within="com.bea..*"/>
+        <exclude within="bea..*"/>
+        <exclude within="com.adventnet..*"/>
+        <exclude within="com.asn1c..*"/>
+        <exclude within="com.beasys..*"/>
+        <exclude within="com.bluecast..*"/>
+        <exclude within="com.certicom..*"/>
+        <exclude within="com.netscape..*"/>
+        <exclude within="com.octetstring..*"/>
+        <exclude within="com.oroinc..*"/>
+        <exclude within="com.rsa..*"/>
+        <exclude within="com.ziclix..*"/>
+        <exclude within="kodo.jdbc..*"/>
+        <exclude within="jxxload_help..*"/>
+        <exclude within="netscape..*"/>
+        <exclude within="org.mozilla..*"/>
+        <exclude within="org.python..*"/>
+
+        <!-- JUnit libs. -->
+        <exclude within="junit.extensions..*"/>
+        <exclude within="junit.framework..*"/>
+        <exclude within="junit.runner..*"/>
+        <exclude within="junit.textui..*"/>
+        <exclude within="org.hamcrest..*"/>
+
+        <!-- GigaSpaces libs. -->
+        <exclude within="com.j_spaces..*"/>
+        <exclude within="com.gigaspaces..*"/>
+        <exclude within="net.jini..*"/>
+        <exclude within="org.garret..*"/>
+        <exclude within="com.ccg..*"/>
+        <exclude within="org.safehaus..*"/>
+
+        <!-- WebSphere (IBM) libs. -->
+        <exclude within="com.ibm..*"/>
+
+        <!-- Spring libs. -->
+        <exclude within="org.springframework..*"/>
+        <exclude within="org.aopalliance..*"/>
+
+        <!-- SUN libs. -->
+        <exclude within="com.sun..*"/>
+        <exclude within="sun..*"/>
+        <exclude within="com.iplanet..*"/>
+        <exclude within="org.jcp..*"/>
+        <exclude within="org.omg..*"/>
+
+        <!-- Backport Concurrent libs. -->
+        <exclude within="edu.emory..*"/>
+
+        <!-- Oracle. -->
+        <exclude within="oracle..*"/>
+
+        <!-- Hibernate libs. -->
+        <exclude within="org.hibernate..*"/>
+
+        <!-- JBoss libs. -->
+        <exclude within="org.jboss..*"/>
+
+        <!-- JXInsight (tracing) libs. -->
+        <exclude within="com.jinspired..*"/>
+
+        <!-- Tangosol libs. -->
+        <exclude within="com.tangosol..*"/>
+
+        <!-- Apache libs. -->
+        <exclude within="org.apache..*"/>
+
+        <!-- Javassist libs. -->
+        <exclude within="javassist..*"/>
+
+        <!-- W3C libs. -->
+        <exclude within="org.w3c..*"/>
+
+        <!-- Tidy libs. -->
+        <exclude within="gnu.trove..*"/>
+
+        <!-- JNP libs. -->
+        <exclude within="org.jnp..*"/>
+
+        <!-- Hyperic libs. -->
+        <exclude within="org.hyperic..*"/>
+
+        <!-- Groovy libs. -->
+        <exclude within="groovy..*"/>
+        <exclude within="org.codehaus.groovy..*"/>
+
+        <!-- Scala libs. -->
+        <exclude within="scala..*"/>
+
+        <!-- Enterprise DT FTP libs. -->
+        <exclude within="com.enterprisedt..*"/>
+
+        <!-- Apache Oro lib. -->
+        <exclude within="org.apache.oro..*"/>
+
+        <!-- XStream libs. -->
+        <exclude within="com.thoughtworks.xstream..*"/>
+        <exclude within="org.xmlpull..*"/>
+
+        <!-- SLF4J libs. -->
+        <exclude within="org.slf4j..*"/>
+
+        <!-- 'javax' libs. -->
+        <exclude within="javax..*"/>
+
+        <!-- JSON Lib libs. -->
+        <exclude within="net.sf.json..*"/>
+
+        <!-- EZMorph libs. -->
+        <exclude within="net.sf.ezmorph..*"/>
+
+        <!-- Jetty libs. -->
+        <exclude within="org.mortbay..*"/>
+
+        <!-- H2 Database Engine libs. -->
+        <exclude within="org.h2..*"/>
+
+        <!-- Cron4J libs. -->
+        <exclude within="it.sauronsoftware.cron4j..*"/>
+
+        <!-- Amazon libs. -->
+        <exclude within="com.amazon..*"/>
+        <exclude within="com.amazonaws..*"/>
+    </aspects>
+</aspectj>

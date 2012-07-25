@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    _________        _____ __________________        _____
+    __  ____/___________(_)______  /__  ____/______ ____(_)_______
+    _  / __  __  ___/__  / _  __  / _  / __  _  __ `/__  / __  __ \
+    / /_/ /  _  /    _  /  / /_/ /  / /_/ /  / /_/ / _  /  _  / / /
+    \____/   /_/     /_/   \_,__/   \____/   \__,_/  /_/   /_/ /_/
+
+    Copyright (C) GridGain Systems Licensed under GPLv3, http://www.gnu.org/licenses/gpl.html
+    Version: 3.6.0c.13012012
+-->
+
+<!--
+    GridGain Spring configuration file to startup grid with node benchmarks enabled.
+
+    When starting a standalone GridGain node, you need to execute the following command:
+    {GRIDGAIN_HOME}/bin/ggstart.{bat|sh} path-to-this-file/spring-benchmark.xml
+
+    When starting GridGain from Java IDE, pass path to this file into GridFactory:
+    GridFactory.start("path-to-this-file/spring-benchmark.xml");
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+    <!--
+        Optional description.
+    -->
+    <description>
+        Spring file for grid configuration with benchmark.
+    </description>
+
+    <!--
+        Configuration below demonstrates how to setup a load balancing SPI
+        to provide custom load balancing for grid jobs.
+
+        You can uncomment any of the load balancing SPI's provided below.
+    -->
+    <bean id="grid.cfg" class="org.gridgain.grid.GridConfigurationAdapter" scope="singleton">
+        <!--
+            Load balancing SPI that automatically adapts to CPU load on various grid nodes.
+        -->
+        <property name="loadBalancingSpi">
+            <bean class="org.gridgain.grid.spi.loadbalancing.adaptive.GridAdaptiveLoadBalancingSpi">
+                <property name="loadProbe">
+                    <bean class="org.gridgain.grid.spi.loadbalancing.adaptive.GridAdaptiveCpuLoadProbe">
+                        <property name="useAverage" value="true"/>
+                        <property name="useProcessors" value="true"/>
+                        <property name="processorCoefficient" value="0.9"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+
+        <!--
+            Weighted random load balancing which distributes jobs to nodes based on predefined
+            weights.
+        -->
+        <!--
+        <property name="loadBalancingSpi">
+            <bean class="org.gridgain.grid.spi.loadbalancer.weightedrandom.GridWeightedRandomLoadBalancingSpi">
+                <property name="useWeights" value="true"/>
+                <property name="nodeWeight" value="10"/>
+            </bean>
+        </property>
+        -->
+
+        <!--
+            Load balancing implementation which tries to assign each job produced by task to
+            a different node.
+        -->
+        <!--
+        <property name="loadBalancingSpi">
+            <bean class="org.gridgain.grid.spi.loadbalancer.roundrobin.GridRoundRobinLoadBalancingSpi">
+                <property name="perTask" value="true"/>
+            </bean>
+        </property>
+        -->
+    </bean>
+</beans>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    _________        _____ __________________        _____
+    __  ____/___________(_)______  /__  ____/______ ____(_)_______
+    _  / __  __  ___/__  / _  __  / _  / __  _  __ `/__  / __  __ \
+    / /_/ /  _  /    _  /  / /_/ /  / /_/ /  / /_/ / _  /  _  / / /
+    \____/   /_/     /_/   \_,__/   \____/   \__,_/  /_/   /_/ /_/
+
+    Copyright (C) GridGain Systems Licensed under GPLv3, http://www.gnu.org/licenses/gpl.html
+    Version: 3.6.0c.13012012
+-->
+
+<!DOCTYPE server PUBLIC "-//JBoss//DTD MBean Service 4.0//EN" "http://www.jboss.org/j2ee/dtd/jboss-service_4_0.dtd">
+
+<!--
+    JBoss service descriptor for GridGain JBoss Loader.
+
+    Classpath should contain the following libraries:
+    - $GRIDGAIN_HOME/libs/*.jar
+    - $GRIDGAIN_HOME/gridgain_x.x.x.jar
+
+    For example, if GridGain is installed on Linux into /opt/gridgain-3.6.0c then
+    you can use the following classpath settings to includes all
+    necessary JARs:
+
+    <classpath codebase="file:///opt/gridgain-3.6.0c/gridgain-3.6.0c.jar"/>
+    <classpath codebase="file:///opt/gridgain-3.6.0c/libs" archives="*"/>
+
+    If GridGain is installed on Windows into C:/gridgain-3.6.0c then
+    you can use the following classpath settings to includes all
+    necessary JARs:
+
+    <classpath codebase="file:/C:/gridgain-3.6.0c/gridgain-3.6.0c.jar"/>
+    <classpath codebase="file:/C:/gridgain-3.6.0c/libs" archives="*"/>
+-->
+<server>
+    <!--
+        TODO:
+        Replace ${GRIDGAIN_HOME} with actual path to GridGain
+        installation folder.
+    -->
+    <classpath codebase="file:/${GRIDGAIN_HOME}/gridgain-3.6.0c.jar"/>
+    <classpath codebase="file:/${GRIDGAIN_HOME}/libs" archives="*"/>
+
+    <mbean code="org.gridgain.grid.loaders.jboss.GridJbossLoader" name="gridgain:service=loader">
+        <!--
+            This is specific configuration for JBoss HA. It will use JBoss SPIs for
+            communication and discovery. Note that JBoss HA is required.
+        -->
+        <attribute name="ConfigurationFile">config/jboss5/ha/jboss-gridgain-ha-spring.xml</attribute>
+
+        <!-- Change the partition name to whatever name is used in JBoss. -->
+        <depends>jboss:service=HAPartition,partition=${jboss.partition.name:DefaultPartition}</depends>
+    </mbean>
+</server>
+
